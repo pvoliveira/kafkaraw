@@ -19,10 +19,17 @@ namespace KafkaRaw.Protocols
             }
 
             var hasErrorCode = reader.TryReadBigEndian(out short errorCode);
-            if (hasErrorCode) reader.Advance(2);
+            
+            if (hasErrorCode) 
+            {
+                message = default;
+                return false;
+            }
+
+            reader.Advance(2);
 
             var hasApiKeys = reader.TryReadBigEndian(out int apiKeysLength);
-            ApiKeys[] apiKeys;
+            ApiKeys[] apiKeys = null;
             if (hasApiKeys)
             {
                 reader.Advance(4);
@@ -31,14 +38,16 @@ namespace KafkaRaw.Protocols
                 for (int i = 0; i < apiKeysLength; i++)
                 {
                     reader.TryReadBigEndian(out short apiKey);
+                    reader.Advance(2);
                     reader.TryReadBigEndian(out short minVersion);
+                    reader.Advance(2);
                     reader.TryReadBigEndian(out short maxVersion);
+                    reader.Advance(2);
                     apiKeys[i] = new ApiKeys(apiKey, minVersion, maxVersion);
-                    reader.Advance(16);
                 }
             }
 
-            var hasThrottleTime = reader.TryReadBigEndian(out int throttleTimeMs);
+            _ = reader.TryReadBigEndian(out int throttleTimeMs);
             reader.Advance(4);
 
             message = new ApiVersionsResponse(errorCode, apiKeys, throttleTimeMs);

@@ -22,22 +22,11 @@ namespace KafkaRaw.Protocols
             var sizeBuffer = output.GetSpan(4);
             BinaryPrimitives.WriteInt32BigEndian(sizeBuffer, size);
             output.Advance(4);
-
-            var csnBytesBuffer = output.GetSpan(csnBytes.Length);
-            csnBytes.AsSpan().CopyTo(csnBytesBuffer);
-            output.Advance(csnBytes.Length);
-
-            var csnNBuffer = output.GetSpan(csnN.Length);
-            csnN.AsSpan().CopyTo(csnNBuffer);
-            output.Advance(csnN.Length);
-
-            var csvBytesBuffer = output.GetSpan(csvBytes.Length);
-            csvBytes.AsSpan().CopyTo(csvBytesBuffer);
-            output.Advance(csvBytes.Length);
-
-            var csvNBuffer = output.GetSpan(csvN.Length);
-            csvN.AsSpan().CopyTo(csvNBuffer);
-            output.Advance(csvN.Length);
+            
+            output.Write(csnN);
+            output.Write(csnBytes);
+            output.Write(csvN);
+            output.Write(csvBytes);
         }
     }
 }
