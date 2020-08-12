@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Security.Authentication.ExtendedProtection;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace KafkaClient
 {
@@ -6,7 +8,7 @@ namespace KafkaClient
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var serviceCollection = new ServiceCollection();
         }
     }
 }
