@@ -6,18 +6,15 @@ namespace KafkaRaw.Protocols.Messages
     /// <summary>ApiVersions Response (Version: 3)</summary>
     public struct ApiVersionsResponse
     {
-        public ApiVersionsResponse(short errorCode, ApiKeys[] apiKeys, int throttleTimeMs)
+        public ApiVersionsResponse(short errorCode, ApiKeys[] apiKeys)
         {
             ErrorCode = errorCode;
             ApiKeys = apiKeys;
-            ThrottleTimeMs = throttleTimeMs;
         }
 
         public short ErrorCode { get; }
 
         public ApiKeys[] ApiKeys { get; }
-
-        public int ThrottleTimeMs { get; }
     }
 
     public struct ApiKeys

@@ -1,14 +1,34 @@
-﻿using System;
-using System.Security.Authentication.ExtendedProtection;
+﻿using System.Threading.Tasks;
+using System.Text.Json;
+using KafkaRaw;
+using KafkaRaw.Interfaces;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace KafkaClient
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            var serviceCollection = new ServiceCollection();
+            var provider = new ServiceCollection()
+                .AddLogging(builder =>
+                    builder
+                        .SetMinimumLevel(LogLevel.Debug)
+                        .AddConsole(opts => opts.DisableColors = false))
+                .AddKafkaRawClient("localhost:9092")
+                .BuildServiceProvider();
+
+            await provider.GetService<IKafkaRawClient>().ConnectAsync();
+
+            var r = await provider.GetService<IKafkaRawClient>().GetApiVersions();
+
+            string apis = JsonSerializer.Serialize(r, new JsonSerializerOptions { WriteIndented = true });
+
+            provider.GetService<ILogger<Program>>().LogDebug($"ApiVersions: {apis}");
+
+            Console.ReadKey();
         }
     }
 }
