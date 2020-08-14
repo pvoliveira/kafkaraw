@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
+using KafkaRaw.Protocols.Messages;
 
 namespace KafkaRaw.Interfaces
 {
-    interface IKafkaRawClient : IAsyncDisposable
+    public interface IKafkaRawClient : IAsyncDisposable
     {
-        Task StartAsync();
+        Task ConnectAsync();
+
+        Task<ApiVersionsResponse> GetApiVersions();
     }
 }
