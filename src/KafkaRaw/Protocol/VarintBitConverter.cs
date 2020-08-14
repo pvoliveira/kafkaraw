@@ -1,7 +1,7 @@
 /// Class was found here: https://github.com/topas/VarintBitConverter
 using System;
 
-namespace KafkaRaw.Protocols
+namespace KafkaRaw.Protocol
 {
     internal class VarintBitConverter
     {

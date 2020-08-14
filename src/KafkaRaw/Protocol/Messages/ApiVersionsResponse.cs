@@ -1,23 +1,23 @@
 /// https://kafka.apache.org/protocol#The_Messages_ApiVersions
 using System;
 
-namespace KafkaRaw.Protocols.Messages
+namespace KafkaRaw.Protocol.Messages
 {
     /// <summary>ApiVersions Response (Version: 3)</summary>
     public struct ApiVersionsResponse
     {
-        public ApiVersionsResponse(short errorCode, ApiKeys[] apiKeys, int throttleTimeMs)
+        public ApiVersionsResponse(int correlationId, short errorCode, ApiKeys[] apiKeys)
         {
+            CorrelationId = correlationId;
             ErrorCode = errorCode;
             ApiKeys = apiKeys;
-            ThrottleTimeMs = throttleTimeMs;
         }
+
+        public int CorrelationId { get; }
 
         public short ErrorCode { get; }
 
         public ApiKeys[] ApiKeys { get; }
-
-        public int ThrottleTimeMs { get; }
     }
 
     public struct ApiKeys

@@ -1,7 +1,7 @@
 /// https://kafka.apache.org/protocol#protocol_error_codes
-namespace KafkaRaw.Protocols
+namespace KafkaRaw.Protocol
 {
-    public enum ErrorCodes
+    public enum ErrorCodes : short
     {
         /// <summary>Retriable = False; Description = The server experienced an unexpected error when processing the request.</summary>
         UNKNOWN_SERVER_ERROR = -1,
@@ -95,7 +95,7 @@ namespace KafkaRaw.Protocols
 
         /// <summary>Retriable = False; Description = Topic authorization failed.</summary>
         TOPIC_AUTHORIZATION_FAILED = 29,
-        
+
         /// <summary>Retriable = False; Description = Group authorization failed.</summary>
         GROUP_AUTHORIZATION_FAILED = 30,
 
@@ -241,7 +241,7 @@ namespace KafkaRaw.Protocols
 
         /// <summary>Retriable = True; Description = The leader high watermark has not caught up from a recent leader election so the offsets cannot be guaranteed to be monotonically increasing.</summary>
         OFFSET_NOT_AVAILABLE = 78,
-        
+
         /// <summary>Retriable = False; Description = The group member needs to have a valid member id before actually entering a consumer group.</summary>
         MEMBER_ID_REQUIRED = 79,
         /// <summary>Retriable = True; Description = The preferred leader was not available.</summary>
